@@ -244,7 +244,7 @@
                     </div>
                 </div>
                 <div class="chart-card">
-                    <h3>平台GMV分布</h3>
+                    <h3>平台GMV占比</h3>
                     <div class="chart-container">
                         <canvas id="platformChart"></canvas>
                     </div>
@@ -260,18 +260,30 @@
                         <tr>
                             <th>日期</th>
                             <th class="number">GMV</th>
+                            <th class="number">Revenue</th>
+                            <th class="number">毛利额</th>
+                            <th class="number">毛利率%</th>
                             <th class="number">顾客数</th>
                             <th class="number">新客数</th>
-                            <th class="number">新客率</th>
+                            <th class="number">新客率%</th>
+                            <th class="number">订单数</th>
                         </tr>
                     </thead>
                     <tbody id="dailyTableBody"></tbody>
                 </table>
             </div>
-            <div class="chart-card" style="margin-top: 24px;">
-                <h3>每日GMV与顾客数趋势</h3>
-                <div class="chart-container">
-                    <canvas id="dailyTrendChart"></canvas>
+            <div class="charts-grid" style="margin-top: 24px;">
+                <div class="chart-card">
+                    <h3>GMV与顾客数趋势</h3>
+                    <div class="chart-container">
+                        <canvas id="dailyTrendChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>毛利率与新客率趋势</h3>
+                    <div class="chart-container">
+                        <canvas id="dailyRateChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
@@ -293,7 +305,9 @@
                                 <tr>
                                     <th>平台</th>
                                     <th class="number">GMV</th>
-                                    <th class="number">Revenue</th>
+                                    <th class="number">占比%</th>
+                                    <th class="number">毛利率%</th>
+                                    <th class="number">顾客数</th>
                                 </tr>
                             </thead>
                             <tbody id="platformTableBody"></tbody>
@@ -317,6 +331,8 @@
                         <tr>
                             <th>科室</th>
                             <th class="number">GMV</th>
+                            <th class="number">占比%</th>
+                            <th class="number">订单数</th>
                         </tr>
                     </thead>
                     <tbody id="deptTableBody"></tbody>
@@ -338,6 +354,8 @@
                         <tr>
                             <th>省份</th>
                             <th class="number">GMV</th>
+                            <th class="number">占比%</th>
+                            <th class="number">订单数</th>
                         </tr>
                     </thead>
                     <tbody id="provinceTableBody"></tbody>
@@ -408,15 +426,14 @@
                 { label: '总顾客数', value: summary.total_customers.toLocaleString(), subtitle: `平均日顾客数: ${summary.avg_daily_customers.toLocaleString()}` },
                 { label: '新客数', value: summary.total_new_customers.toLocaleString(), subtitle: `新客率: ${summary.new_customer_rate}%` },
                 { label: '总毛利额', value: formatCurrency(summary.gross_margin), subtitle: `毛利率: ${summary.margin_rate}%` },
-                { label: '总订单数', value: summary.total_orders.toLocaleString(), subtitle: '9天累计' },
-                { label: '3/31 GMV', value: formatCurrency(summary.gmv_331), subtitle: `较3/30 ${summary.change_331 > 0 ? '+' : ''}${summary.change_331}%`, trend: summary.change_331 }
+                { label: '总订单数', value: summary.total_orders.toLocaleString(), subtitle: '9天累计' }
             ];
 
             const grid = document.getElementById('metricsGrid');
             grid.innerHTML = metrics.map(m => `
                 <div class="metric-card">
                     <div class="label">${m.label}</div>
-                    <div class="value ${m.trend > 0 ? 'positive' : (m.trend < 0 ? 'negative' : '')}">${m.value}</div>
+                    <div class="value">${m.value}</div>
                     <div class="subtitle">${m.subtitle}</div>
                 </div>
             `).join('');
@@ -477,7 +494,7 @@
                 }
             });
 
-            // 每日趋势双轴图
+            // 每日趋势双轴图（GMV vs 顾客数）
             const dailyTrendCtx = document.getElementById('dailyTrendChart');
             if (dailyTrendCtx) {
                 new Chart(dailyTrendCtx.getContext('2d'), {
@@ -508,6 +525,41 @@
                         scales: {
                             y: { beginAtZero: true, type: 'linear', position: 'left', ticks: { callback: value => formatCurrency(value) } },
                             y1: { beginAtZero: true, type: 'linear', position: 'right', grid: { drawOnChartArea: false }, ticks: { callback: value => formatNumber(value) } }
+                        }
+                    }
+                });
+            }
+
+            // 每日趋势双轴图（毛利率 vs 新客率）
+            const dailyRateCtx = document.getElementById('dailyRateChart');
+            if (dailyRateCtx) {
+                new Chart(dailyRateCtx.getContext('2d'), {
+                    type: 'line',
+                    data: {
+                        labels: data.daily.map(d => d.date.substring(5)),
+                        datasets: [
+                            {
+                                label: '毛利率%',
+                                data: data.daily.map(d => d.margin_rate),
+                                borderColor: '#52c41a',
+                                tension: 0.4,
+                                yAxisID: 'y'
+                            },
+                            {
+                                label: '新客率%',
+                                data: data.daily.map(d => d.new_customer_rate),
+                                borderColor: '#faad14',
+                                tension: 0.4,
+                                yAxisID: 'y'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        scales: {
+                            y: { beginAtZero: true, type: 'linear', position: 'left', ticks: { callback: value => value + '%' } }
                         }
                     }
                 });
@@ -602,9 +654,13 @@
                 <tr>
                     <td>${d.date}</td>
                     <td class="number">${formatCurrency(d.gmv)}</td>
+                    <td class="number">${formatCurrency(d.revenue)}</td>
+                    <td class="number">${formatCurrency(d.margin)}</td>
+                    <td class="number">${formatPercent(d.margin_rate)}</td>
                     <td class="number">${d.customers.toLocaleString()}</td>
                     <td class="number">${d.new_customers.toLocaleString()}</td>
-                    <td class="number">${formatPercent(d.new_customers / d.customers * 100)}</td>
+                    <td class="number">${formatPercent(d.new_customer_rate)}</td>
+                    <td class="number">${d.orders.toLocaleString()}</td>
                 </tr>
             `).join('');
 
@@ -614,7 +670,9 @@
                 <tr>
                     <td>${p.name}</td>
                     <td class="number">${formatCurrency(p.gmv)}</td>
-                    <td class="number">${formatCurrency(p.revenue)}</td>
+                    <td class="number">${formatPercent(p.share)}</td>
+                    <td class="number">${formatPercent(p.margin_rate)}</td>
+                    <td class="number">${p.customers.toLocaleString()}</td>
                 </tr>
             `).join('');
 
@@ -624,6 +682,8 @@
                 <tr>
                     <td>${d.name}</td>
                     <td class="number">${formatCurrency(d.gmv)}</td>
+                    <td class="number">${formatPercent(d.share)}</td>
+                    <td class="number">${d.orders.toLocaleString()}</td>
                 </tr>
             `).join('');
 
@@ -633,6 +693,8 @@
                 <tr>
                     <td>${p.name}</td>
                     <td class="number">${formatCurrency(p.gmv)}</td>
+                    <td class="number">${formatPercent(p.share)}</td>
+                    <td class="number">${p.orders.toLocaleString()}</td>
                 </tr>
             `).join('');
         }

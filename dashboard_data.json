@@ -8,8 +8,6 @@
     "new_customer_rate": 27.7,
     "gross_margin": 877389.0,
     "margin_rate": 9.5,
-    "gmv_331": 1066795.44,
-    "change_331": -3.1,
     "total_orders": 83033,
     "date_range": "2026-03-23 ~ 2026-03-31"
   },
@@ -17,162 +15,311 @@
     {
       "date": "2026-03-23",
       "gmv": 1143116.12,
+      "revenue": 714367.81,
+      "margin": 109663.31,
+      "margin_rate": 9.59,
       "customers": 13876,
-      "new_customers": 3849
+      "new_customers": 3849,
+      "new_customer_rate": 27.7,
+      "orders": 9928
     },
     {
       "date": "2026-03-24",
       "gmv": 1075682.29,
+      "revenue": 671402.31,
+      "margin": 100018.17,
+      "margin_rate": 9.3,
       "customers": 12477,
-      "new_customers": 3652
+      "new_customers": 3652,
+      "new_customer_rate": 29.3,
+      "orders": 9214
     },
     {
       "date": "2026-03-25",
       "gmv": 1065052.73,
+      "revenue": 664295.29,
+      "margin": 101686.62,
+      "margin_rate": 9.55,
       "customers": 12695,
-      "new_customers": 3810
+      "new_customers": 3810,
+      "new_customer_rate": 30.0,
+      "orders": 9221
     },
     {
       "date": "2026-03-26",
       "gmv": 1008869.97,
+      "revenue": 622899.57,
+      "margin": 94876.43,
+      "margin_rate": 9.4,
       "customers": 12544,
-      "new_customers": 3650
+      "new_customers": 3650,
+      "new_customer_rate": 29.1,
+      "orders": 9285
     },
     {
       "date": "2026-03-27",
       "gmv": 951189.93,
+      "revenue": 593729.94,
+      "margin": 87845.39,
+      "margin_rate": 9.24,
       "customers": 12229,
-      "new_customers": 3093
+      "new_customers": 3093,
+      "new_customer_rate": 25.3,
+      "orders": 9303
     },
     {
       "date": "2026-03-28",
       "gmv": 869801.99,
+      "revenue": 524585.56,
+      "margin": 85809.04,
+      "margin_rate": 9.87,
       "customers": 10590,
-      "new_customers": 2677
+      "new_customers": 2677,
+      "new_customer_rate": 25.3,
+      "orders": 8314
     },
     {
       "date": "2026-03-29",
       "gmv": 907776.84,
+      "revenue": 567166.77,
+      "margin": 84430.0,
+      "margin_rate": 9.3,
       "customers": 11062,
-      "new_customers": 2970
+      "new_customers": 2970,
+      "new_customer_rate": 26.8,
+      "orders": 8480
     },
     {
       "date": "2026-03-30",
       "gmv": 1101050.6,
+      "revenue": 682931.58,
+      "margin": 109177.72,
+      "margin_rate": 9.92,
       "customers": 13237,
-      "new_customers": 3513
+      "new_customers": 3513,
+      "new_customer_rate": 26.5,
+      "orders": 9933
     },
     {
       "date": "2026-03-31",
       "gmv": 1066795.44,
+      "revenue": 680714.36,
+      "margin": 103882.63,
+      "margin_rate": 9.74,
       "customers": 12436,
-      "new_customers": 3540
+      "new_customers": 3540,
+      "new_customer_rate": 28.5,
+      "orders": 9355
     }
   ],
   "platform": [
     {
       "name": "官网/APP",
       "gmv": 4988111.08,
-      "revenue": 2186096.87
+      "revenue": 2186096.87,
+      "margin": 348004.13,
+      "margin_rate": 6.98,
+      "customers": 66284,
+      "new_customers": 6887,
+      "orders": 59100,
+      "share": 54.28
     },
     {
       "name": "三方平台",
       "gmv": 3091953.36,
-      "revenue": 2736269.92
+      "revenue": 2736269.92,
+      "margin": 303373.31,
+      "margin_rate": 9.81,
+      "customers": 36242,
+      "new_customers": 22250,
+      "orders": 15601,
+      "share": 33.65
     },
     {
       "name": "官网/H5",
       "gmv": 821977.37,
-      "revenue": 576005.08
+      "revenue": 576005.08,
+      "margin": 114882.65,
+      "margin_rate": 13.98,
+      "customers": 7472,
+      "new_customers": 1569,
+      "orders": 7226,
+      "share": 8.94
     },
     {
       "name": "官网/PC",
       "gmv": 287294.11,
-      "revenue": 223721.32
+      "revenue": 223721.32,
+      "margin": 111129.21,
+      "margin_rate": 38.68,
+      "customers": 1148,
+      "new_customers": 48,
+      "orders": 1106,
+      "share": 3.13
     }
   ],
   "dept": [
     {
       "name": "心脑血管",
-      "gmv": 1733903.81
+      "gmv": 1733903.81,
+      "revenue": 1159709.48,
+      "customers": 15951,
+      "orders": 10571,
+      "share": 18.87
     },
     {
       "name": "男科疾病",
-      "gmv": 1091070.18
+      "gmv": 1091070.18,
+      "revenue": 838519.97,
+      "customers": 8576,
+      "orders": 6783,
+      "share": 11.87
     },
     {
       "name": "神经系统",
-      "gmv": 1019383.96
+      "gmv": 1019383.96,
+      "revenue": 668383.21,
+      "customers": 8281,
+      "orders": 5465,
+      "share": 11.09
     },
     {
       "name": "呼吸道疾病",
-      "gmv": 629211.29
+      "gmv": 629211.29,
+      "revenue": 417926.43,
+      "customers": 11351,
+      "orders": 7118,
+      "share": 6.85
     },
     {
       "name": "滋补调养",
-      "gmv": 628261.62
+      "gmv": 628261.62,
+      "revenue": 397427.27,
+      "customers": 7230,
+      "orders": 6088,
+      "share": 6.84
     },
     {
       "name": "肝病科",
-      "gmv": 609170.11
+      "gmv": 609170.11,
+      "revenue": 405661.61,
+      "customers": 3600,
+      "orders": 2713,
+      "share": 6.63
     },
     {
       "name": "皮肤病",
-      "gmv": 584398.36
+      "gmv": 584398.36,
+      "revenue": 409744.76,
+      "customers": 11884,
+      "orders": 7386,
+      "share": 6.36
     },
     {
       "name": "内分泌",
-      "gmv": 577399.58
+      "gmv": 577399.58,
+      "revenue": 395850.49,
+      "customers": 5825,
+      "orders": 4138,
+      "share": 6.28
     },
     {
       "name": "风湿骨科",
-      "gmv": 566685.93
+      "gmv": 566685.93,
+      "revenue": 329716.14,
+      "customers": 6448,
+      "orders": 5008,
+      "share": 6.17
     },
     {
       "name": "消化系统疾病",
-      "gmv": 347183.82
+      "gmv": 347183.82,
+      "revenue": 182166.16,
+      "customers": 6750,
+      "orders": 5904,
+      "share": 3.78
     }
   ],
   "province": [
     {
       "name": "广东",
-      "gmv": 1019484.08
+      "gmv": 1019484.08,
+      "revenue": 654398.69,
+      "customers": 13096,
+      "orders": 8612,
+      "share": 11.09
     },
     {
       "name": "江苏",
-      "gmv": 743829.79
+      "gmv": 743829.79,
+      "revenue": 482967.45,
+      "customers": 8806,
+      "orders": 6127,
+      "share": 8.09
     },
     {
       "name": "浙江",
-      "gmv": 592050.54
+      "gmv": 592050.54,
+      "revenue": 387333.57,
+      "customers": 8022,
+      "orders": 5597,
+      "share": 6.44
     },
     {
       "name": "上海",
-      "gmv": 546712.75
+      "gmv": 546712.75,
+      "revenue": 354224.71,
+      "customers": 6787,
+      "orders": 5114,
+      "share": 5.95
     },
     {
       "name": "山东",
-      "gmv": 514994.08
+      "gmv": 514994.08,
+      "revenue": 336804.97,
+      "customers": 6480,
+      "orders": 4194,
+      "share": 5.6
     },
     {
       "name": "四川",
-      "gmv": 424589.15
+      "gmv": 424589.15,
+      "revenue": 237720.46,
+      "customers": 5019,
+      "orders": 4033,
+      "share": 4.62
     },
     {
       "name": "河北",
-      "gmv": 419203.09
+      "gmv": 419203.09,
+      "revenue": 264763.95,
+      "customers": 4758,
+      "orders": 3527,
+      "share": 4.56
     },
     {
       "name": "黑龙江",
-      "gmv": 387345.52
+      "gmv": 387345.52,
+      "revenue": 243648.62,
+      "customers": 4068,
+      "orders": 2780,
+      "share": 4.22
     },
     {
       "name": "湖北",
-      "gmv": 357491.95
+      "gmv": 357491.95,
+      "revenue": 214294.66,
+      "customers": 3972,
+      "orders": 3076,
+      "share": 3.89
     },
     {
       "name": "湖南",
-      "gmv": 356140.85
+      "gmv": 356140.85,
+      "revenue": 205880.22,
+      "customers": 4148,
+      "orders": 3469,
+      "share": 3.88
     }
   ]
 }
