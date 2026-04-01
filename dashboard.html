@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>壹药网早报数据分析看板</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #1890ff;
+            --success-color: #52c41a;
+            --warning-color: #faad14;
+            --error-color: #f5222d;
+            --bg-color: #f0f2f5;
+            --card-bg: #ffffff;
+            --text-primary: #262626;
+            --text-secondary: #8c8c8c;
+            --border-color: #e8e8e8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        header .subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 24px;
+            background: var(--card-bg);
+            padding: 8px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .tab {
+            padding: 10px 24px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .tab:hover:not(.active) {
+            background: #f5f5f5;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .metric-card {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.2s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .metric-card .label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .metric-card .value {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .metric-card .subtitle {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .metric-card .value.positive {
+            color: var(--success-color);
+        }
+
+        .metric-card .value.negative {
+            color: var(--error-color);
+        }
+
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-card {
+            background: var(--card-bg);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .chart-card h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+
+        .data-table {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .data-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background: #fafafa;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .data-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .data-table .number {
+            text-align: right;
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+        }
+
+        footer {
+            text-align: center;
+            padding: 24px;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        @media (max-width: 768px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>壹药网早报数据分析看板</h1>
+            <div class="subtitle" id="dateRange"></div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab active" data-tab="overview">概览</button>
+            <button class="tab" data-tab="daily">每日趋势</button>
+            <button class="tab" data-tab="channel">渠道分布</button>
+            <button class="tab" data-tab="category">科室分析</button>
+            <button class="tab" data-tab="region">省份分析</button>
+        </div>
+
+        <!-- 概览标签页 -->
+        <div id="overview" class="tab-content active">
+            <div class="metrics-grid" id="metricsGrid"></div>
+
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>每日GMV趋势</h3>
+                    <div class="chart-container">
+                        <canvas id="dailyGmvChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>平台GMV分布</h3>
+                    <div class="chart-container">
+                        <canvas id="platformChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 每日趋势标签页 -->
+        <div id="daily" class="tab-content">
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>日期</th>
+                            <th class="number">GMV</th>
+                            <th class="number">顾客数</th>
+                            <th class="number">新客数</th>
+                            <th class="number">新客率</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dailyTableBody"></tbody>
+                </table>
+            </div>
+            <div class="chart-card" style="margin-top: 24px;">
+                <h3>每日GMV与顾客数趋势</h3>
+                <div class="chart-container">
+                    <canvas id="dailyTrendChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- 渠道分布标签页 -->
+        <div id="channel" class="tab-content">
+            <div class="charts-grid">
+                <div class="chart-card">
+                    <h3>平台GMV占比</h3>
+                    <div class="chart-container">
+                        <canvas id="platformPieChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>平台详细数据</h3>
+                    <div class="data-table" style="box-shadow: none; border-radius: 0;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>平台</th>
+                                    <th class="number">GMV</th>
+                                    <th class="number">Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody id="platformTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 科室分析标签页 -->
+        <div id="category" class="tab-content">
+            <div class="chart-card">
+                <h3>Top 10 科室GMV</h3>
+                <div class="chart-container">
+                    <canvas id="deptChart"></canvas>
+                </div>
+            </div>
+            <div class="data-table" style="margin-top: 24px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>科室</th>
+                            <th class="number">GMV</th>
+                        </tr>
+                    </thead>
+                    <tbody id="deptTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 省份分析标签页 -->
+        <div id="region" class="tab-content">
+            <div class="chart-card">
+                <h3>Top 10 省份GMV</h3>
+                <div class="chart-container">
+                    <canvas id="provinceChart"></canvas>
+                </div>
+            </div>
+            <div class="data-table" style="margin-top: 24px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>省份</th>
+                            <th class="number">GMV</th>
+                        </tr>
+                    </thead>
+                    <tbody id="provinceTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <footer>
+            数据来源：壹药网订单数据 | 生成时间：<span id="generateTime"></span>
+        </footer>
+    </div>
+
+    <script>
+        // 加载数据
+        let dashboardData;
+        fetch('dashboard_data.json')
+            .then(res => res.json())
+            .then(data => {
+                dashboardData = data;
+                initDashboard();
+            })
+            .catch(err => {
+                console.error('加载数据失败:', err);
+                document.body.innerHTML = '<div style="text-align:center;padding:50px;">加载数据失败，请确保 dashboard_data.json 文件存在</div>';
+            });
+
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(2) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toLocaleString();
+        }
+
+        function formatCurrency(num) {
+            return '¥' + num.toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        }
+
+        function formatPercent(num) {
+            return num.toFixed(1) + '%';
+        }
+
+        function initDashboard() {
+            const data = dashboardData;
+            const summary = data.summary;
+
+            // 设置日期范围
+            document.getElementById('dateRange').textContent = `数据周期：${summary.date_range} | 生成时间：${new Date().toLocaleString('zh-CN')}`;
+            document.getElementById('generateTime').textContent = new Date().toLocaleString('zh-CN');
+
+            // 初始化指标卡片
+            initMetrics(summary);
+
+            // 初始化图表
+            initCharts(data);
+
+            // 初始化表格
+            initTables(data);
+
+            // 标签页切换
+            initTabs();
+        }
+
+        function initMetrics(summary) {
+            const metrics = [
+                { label: '总 GMV', value: formatCurrency(summary.total_gmv), subtitle: `平均日 GMV: ${formatCurrency(summary.avg_daily_gmv)}` },
+                { label: '总顾客数', value: summary.total_customers.toLocaleString(), subtitle: `平均日顾客数: ${summary.avg_daily_customers.toLocaleString()}` },
+                { label: '新客数', value: summary.total_new_customers.toLocaleString(), subtitle: `新客率: ${summary.new_customer_rate}%` },
+                { label: '总毛利额', value: formatCurrency(summary.gross_margin), subtitle: `毛利率: ${summary.margin_rate}%` },
+                { label: '总订单数', value: summary.total_orders.toLocaleString(), subtitle: '9天累计' },
+                { label: '3/31 GMV', value: formatCurrency(summary.gmv_331), subtitle: `较3/30 ${summary.change_331 > 0 ? '+' : ''}${summary.change_331}%`, trend: summary.change_331 }
+            ];
+
+            const grid = document.getElementById('metricsGrid');
+            grid.innerHTML = metrics.map(m => `
+                <div class="metric-card">
+                    <div class="label">${m.label}</div>
+                    <div class="value ${m.trend > 0 ? 'positive' : (m.trend < 0 ? 'negative' : '')}">${m.value}</div>
+                    <div class="subtitle">${m.subtitle}</div>
+                </div>
+            `).join('');
+        }
+
+        function initCharts(data) {
+            // 每日GMV趋势
+            const dailyCtx = document.getElementById('dailyGmvChart').getContext('2d');
+            new Chart(dailyCtx, {
+                type: 'line',
+                data: {
+                    labels: data.daily.map(d => d.date.substring(5)),
+                    datasets: [{
+                        label: 'GMV',
+                        data: data.daily.map(d => d.gmv),
+                        borderColor: '#1890ff',
+                        backgroundColor: 'rgba(24, 144, 255, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { callback: value => formatCurrency(value) } }
+                    }
+                }
+            });
+
+            // 平台分布饼图
+            const platformPieCtx = document.getElementById('platformChart').getContext('2d');
+            new Chart(platformPieCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: data.platform.map(p => p.name),
+                    datasets: [{
+                        data: data.platform.map(p => p.gmv),
+                        backgroundColor: ['#1890ff', '#52c41a', '#faad14', '#f5222d']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                    const percent = (context.raw / total * 100).toFixed(1);
+                                    return `${context.label}: ${formatCurrency(context.raw)} (${percent}%)`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            // 每日趋势双轴图
+            const dailyTrendCtx = document.getElementById('dailyTrendChart');
+            if (dailyTrendCtx) {
+                new Chart(dailyTrendCtx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.daily.map(d => d.date.substring(5)),
+                        datasets: [
+                            {
+                                label: 'GMV',
+                                data: data.daily.map(d => d.gmv),
+                                backgroundColor: 'rgba(24, 144, 255, 0.6)',
+                                yAxisID: 'y'
+                            },
+                            {
+                                label: '顾客数',
+                                data: data.daily.map(d => d.customers),
+                                type: 'line',
+                                borderColor: '#f5222d',
+                                tension: 0.4,
+                                yAxisID: 'y1'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        scales: {
+                            y: { beginAtZero: true, type: 'linear', position: 'left', ticks: { callback: value => formatCurrency(value) } },
+                            y1: { beginAtZero: true, type: 'linear', position: 'right', grid: { drawOnChartArea: false }, ticks: { callback: value => formatNumber(value) } }
+                        }
+                    }
+                });
+            }
+
+            // 科室柱状图
+            const deptCtx = document.getElementById('deptChart');
+            if (deptCtx) {
+                new Chart(deptCtx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.dept.map(d => d.name),
+                        datasets: [{
+                            label: 'GMV',
+                            data: data.dept.map(d => d.gmv),
+                            backgroundColor: 'rgba(82, 196, 26, 0.6)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { beginAtZero: true, ticks: { callback: value => formatCurrency(value) } }
+                        }
+                    }
+                });
+            }
+
+            // 省份柱状图
+            const provinceCtx = document.getElementById('provinceChart');
+            if (provinceCtx) {
+                new Chart(provinceCtx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.province.map(p => p.name),
+                        datasets: [{
+                            label: 'GMV',
+                            data: data.province.map(p => p.gmv),
+                            backgroundColor: 'rgba(250, 173, 20, 0.6)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { beginAtZero: true, ticks: { callback: value => formatCurrency(value) } }
+                        }
+                    }
+                });
+            }
+
+            // 平台饼图（渠道分布页）
+            const platformPie2Ctx = document.getElementById('platformPieChart');
+            if (platformPie2Ctx) {
+                new Chart(platformPie2Ctx.getContext('2d'), {
+                    type: 'pie',
+                    data: {
+                        labels: data.platform.map(p => p.name),
+                        datasets: [{
+                            data: data.platform.map(p => p.gmv),
+                            backgroundColor: ['#1890ff', '#52c41a', '#faad14', '#f5222d']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'right' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percent = (context.raw / total * 100).toFixed(1);
+                                        return `${context.label}: ${formatCurrency(context.raw)} (${percent}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function initTables(data) {
+            // 每日表格
+            const dailyBody = document.getElementById('dailyTableBody');
+            dailyBody.innerHTML = data.daily.map(d => `
+                <tr>
+                    <td>${d.date}</td>
+                    <td class="number">${formatCurrency(d.gmv)}</td>
+                    <td class="number">${d.customers.toLocaleString()}</td>
+                    <td class="number">${d.new_customers.toLocaleString()}</td>
+                    <td class="number">${formatPercent(d.new_customers / d.customers * 100)}</td>
+                </tr>
+            `).join('');
+
+            // 平台表格
+            const platformBody = document.getElementById('platformTableBody');
+            platformBody.innerHTML = data.platform.map(p => `
+                <tr>
+                    <td>${p.name}</td>
+                    <td class="number">${formatCurrency(p.gmv)}</td>
+                    <td class="number">${formatCurrency(p.revenue)}</td>
+                </tr>
+            `).join('');
+
+            // 科室表格
+            const deptBody = document.getElementById('deptTableBody');
+            deptBody.innerHTML = data.dept.map(d => `
+                <tr>
+                    <td>${d.name}</td>
+                    <td class="number">${formatCurrency(d.gmv)}</td>
+                </tr>
+            `).join('');
+
+            // 省份表格
+            const provinceBody = document.getElementById('provinceTableBody');
+            provinceBody.innerHTML = data.province.map(p => `
+                <tr>
+                    <td>${p.name}</td>
+                    <td class="number">${formatCurrency(p.gmv)}</td>
+                </tr>
+            `).join('');
+        }
+
+        function initTabs() {
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetId = tab.dataset.tab;
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+
+                    tab.classList.add('active');
+                    document.getElementById(targetId).classList.add('active');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
