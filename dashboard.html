@@ -32,7 +32,7 @@
         }
 
         .container {
-            max-width: 1400px;
+            max-width: 1600px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -64,6 +64,7 @@
             padding: 8px;
             border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            flex-wrap: wrap;
         }
 
         .tab {
@@ -97,7 +98,7 @@
 
         .metrics-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 16px;
             margin-bottom: 24px;
         }
@@ -179,15 +180,15 @@
 
         .data-table th,
         .data-table td {
-            padding: 14px 16px;
+            padding: 12px 16px;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
         }
 
         .data-table th {
             background: #fafafa;
             font-weight: 600;
-            font-size: 13px;
             color: var(--text-secondary);
         }
 
@@ -214,6 +215,9 @@
             .metrics-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .tabs {
+                justify-content: center;
+            }
         }
     </style>
 </head>
@@ -230,6 +234,8 @@
             <button class="tab" data-tab="channel">渠道分布</button>
             <button class="tab" data-tab="category">科室分析</button>
             <button class="tab" data-tab="region">省份分析</button>
+            <button class="tab" data-tab="manufacturer">厂家分析</button>
+            <button class="tab" data-tab="product">品种分析</button>
         </div>
 
         <!-- 概览标签页 -->
@@ -244,9 +250,21 @@
                     </div>
                 </div>
                 <div class="chart-card">
+                    <h3>每日毛利额趋势</h3>
+                    <div class="chart-container">
+                        <canvas id="dailyMarginChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
                     <h3>平台GMV占比</h3>
                     <div class="chart-container">
                         <canvas id="platformChart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-card">
+                    <h3>Top 10 科室GMV</h3>
+                    <div class="chart-container">
+                        <canvas id="deptPieChart"></canvas>
                     </div>
                 </div>
             </div>
@@ -274,9 +292,9 @@
             </div>
             <div class="charts-grid" style="margin-top: 24px;">
                 <div class="chart-card">
-                    <h3>GMV与顾客数趋势</h3>
+                    <h3>GMV与毛利额趋势</h3>
                     <div class="chart-container">
-                        <canvas id="dailyTrendChart"></canvas>
+                        <canvas id="dailyGmvMarginChart"></canvas>
                     </div>
                 </div>
                 <div class="chart-card">
@@ -306,6 +324,7 @@
                                     <th>平台</th>
                                     <th class="number">GMV</th>
                                     <th class="number">占比%</th>
+                                    <th class="number">毛利额</th>
                                     <th class="number">毛利率%</th>
                                     <th class="number">顾客数</th>
                                 </tr>
@@ -331,6 +350,8 @@
                         <tr>
                             <th>科室</th>
                             <th class="number">GMV</th>
+                            <th class="number">毛利额</th>
+                            <th class="number">毛利率%</th>
                             <th class="number">占比%</th>
                             <th class="number">订单数</th>
                         </tr>
@@ -354,11 +375,63 @@
                         <tr>
                             <th>省份</th>
                             <th class="number">GMV</th>
+                            <th class="number">毛利额</th>
+                            <th class="number">毛利率%</th>
                             <th class="number">占比%</th>
                             <th class="number">订单数</th>
                         </tr>
                     </thead>
                     <tbody id="provinceTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 厂家分析标签页 -->
+        <div id="manufacturer" class="tab-content">
+            <div class="chart-card">
+                <h3>Top 20 厂家GMV</h3>
+                <div class="chart-container">
+                    <canvas id="manufacturerChart"></canvas>
+                </div>
+            </div>
+            <div class="data-table" style="margin-top: 24px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>生产厂商</th>
+                            <th class="number">GMV</th>
+                            <th class="number">毛利额</th>
+                            <th class="number">毛利率%</th>
+                            <th class="number">占比%</th>
+                            <th class="number">订单数</th>
+                        </tr>
+                    </thead>
+                    <tbody id="manufacturerTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 产品分析标签页 -->
+        <div id="product" class="tab-content">
+            <div class="chart-card">
+                <h3>Top 20 产品GMV</h3>
+                <div class="chart-container">
+                    <canvas id="productChart"></canvas>
+                </div>
+            </div>
+            <div class="data-table" style="margin-top: 24px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>产品名称</th>
+                            <th class="number">GMV</th>
+                            <th class="number">毛利额</th>
+                            <th class="number">毛利率%</th>
+                            <th class="number">占比%</th>
+                            <th class="number">订单数</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody"></tbody>
                 </table>
             </div>
         </div>
@@ -369,7 +442,6 @@
     </div>
 
     <script>
-        // 加载数据
         let dashboardData;
         fetch('dashboard_data.json')
             .then(res => res.json())
@@ -403,20 +475,12 @@
             const data = dashboardData;
             const summary = data.summary;
 
-            // 设置日期范围
             document.getElementById('dateRange').textContent = `数据周期：${summary.date_range} | 生成时间：${new Date().toLocaleString('zh-CN')}`;
             document.getElementById('generateTime').textContent = new Date().toLocaleString('zh-CN');
 
-            // 初始化指标卡片
             initMetrics(summary);
-
-            // 初始化图表
             initCharts(data);
-
-            // 初始化表格
             initTables(data);
-
-            // 标签页切换
             initTabs();
         }
 
@@ -441,8 +505,8 @@
 
         function initCharts(data) {
             // 每日GMV趋势
-            const dailyCtx = document.getElementById('dailyGmvChart').getContext('2d');
-            new Chart(dailyCtx, {
+            const dailyGmvCtx = document.getElementById('dailyGmvChart').getContext('2d');
+            new Chart(dailyGmvCtx, {
                 type: 'line',
                 data: {
                     labels: data.daily.map(d => d.date.substring(5)),
@@ -451,6 +515,31 @@
                         data: data.daily.map(d => d.gmv),
                         borderColor: '#1890ff',
                         backgroundColor: 'rgba(24, 144, 255, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { callback: value => formatCurrency(value) } }
+                    }
+                }
+            });
+
+            // 每日毛利额趋势
+            const dailyMarginCtx = document.getElementById('dailyMarginChart').getContext('2d');
+            new Chart(dailyMarginCtx, {
+                type: 'line',
+                data: {
+                    labels: data.daily.map(d => d.date.substring(5)),
+                    datasets: [{
+                        label: '毛利额',
+                        data: data.daily.map(d => d.margin),
+                        borderColor: '#52c41a',
+                        backgroundColor: 'rgba(82, 196, 26, 0.1)',
                         fill: true,
                         tension: 0.4
                     }]
@@ -494,10 +583,41 @@
                 }
             });
 
-            // 每日趋势双轴图（GMV vs 顾客数）
-            const dailyTrendCtx = document.getElementById('dailyTrendChart');
-            if (dailyTrendCtx) {
-                new Chart(dailyTrendCtx.getContext('2d'), {
+            // 科室饼图（概览页）
+            const deptPieCtx = document.getElementById('deptPieChart');
+            if (deptPieCtx) {
+                new Chart(deptPieCtx.getContext('2d'), {
+                    type: 'pie',
+                    data: {
+                        labels: data.dept.map(d => d.name),
+                        datasets: [{
+                            data: data.dept.map(d => d.gmv),
+                            backgroundColor: ['#1890ff', '#52c41a', '#faad14', '#f5222d', '#13c2c2', '#eb2f96', '#722ed1', '#2f54eb', '#fa8c16', '#a0d911']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'right' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const total = context.dataset.data.reduce((a, b) => a + b, 0);
+                                        const percent = (context.raw / total * 100).toFixed(1);
+                                        return `${context.label}: ${formatCurrency(context.raw)} (${percent}%)`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // 每日趋势双轴图（GMV vs 毛利额）
+            const dailyGmvMarginCtx = document.getElementById('dailyGmvMarginChart');
+            if (dailyGmvMarginCtx) {
+                new Chart(dailyGmvMarginCtx.getContext('2d'), {
                     type: 'bar',
                     data: {
                         labels: data.daily.map(d => d.date.substring(5)),
@@ -509,10 +629,10 @@
                                 yAxisID: 'y'
                             },
                             {
-                                label: '顾客数',
-                                data: data.daily.map(d => d.customers),
+                                label: '毛利额',
+                                data: data.daily.map(d => d.margin),
                                 type: 'line',
-                                borderColor: '#f5222d',
+                                borderColor: '#52c41a',
                                 tension: 0.4,
                                 yAxisID: 'y1'
                             }
@@ -524,7 +644,7 @@
                         interaction: { mode: 'index', intersect: false },
                         scales: {
                             y: { beginAtZero: true, type: 'linear', position: 'left', ticks: { callback: value => formatCurrency(value) } },
-                            y1: { beginAtZero: true, type: 'linear', position: 'right', grid: { drawOnChartArea: false }, ticks: { callback: value => formatNumber(value) } }
+                            y1: { beginAtZero: true, type: 'linear', position: 'right', grid: { drawOnChartArea: false }, ticks: { callback: value => formatCurrency(value) } }
                         }
                     }
                 });
@@ -615,6 +735,56 @@
                 });
             }
 
+            // 厂家柱状图
+            const manufacturerCtx = document.getElementById('manufacturerChart');
+            if (manufacturerCtx) {
+                new Chart(manufacturerCtx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.manufacturer.map(m => m.name.length > 15 ? m.name.substring(0, 15) + '...' : m.name),
+                        datasets: [{
+                            label: 'GMV',
+                            data: data.manufacturer.map(m => m.gmv),
+                            backgroundColor: 'rgba(114, 46, 209, 0.6)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { beginAtZero: true, ticks: { callback: value => formatCurrency(value) } }
+                        }
+                    }
+                });
+            }
+
+            // 产品柱状图
+            const productCtx = document.getElementById('productChart');
+            if (productCtx) {
+                new Chart(productCtx.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.product.map(p => p.name.length > 20 ? p.name.substring(0, 20) + '...' : p.name),
+                        datasets: [{
+                            label: 'GMV',
+                            data: data.product.map(p => p.gmv),
+                            backgroundColor: 'rgba(250, 84, 28, 0.6)'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { beginAtZero: true, ticks: { callback: value => formatCurrency(value) } }
+                        }
+                    }
+                });
+            }
+
             // 平台饼图（渠道分布页）
             const platformPie2Ctx = document.getElementById('platformPieChart');
             if (platformPie2Ctx) {
@@ -671,6 +841,7 @@
                     <td>${p.name}</td>
                     <td class="number">${formatCurrency(p.gmv)}</td>
                     <td class="number">${formatPercent(p.share)}</td>
+                    <td class="number">${formatCurrency(p.margin)}</td>
                     <td class="number">${formatPercent(p.margin_rate)}</td>
                     <td class="number">${p.customers.toLocaleString()}</td>
                 </tr>
@@ -682,6 +853,8 @@
                 <tr>
                     <td>${d.name}</td>
                     <td class="number">${formatCurrency(d.gmv)}</td>
+                    <td class="number">${formatCurrency(d.margin)}</td>
+                    <td class="number">${formatPercent(d.margin_rate)}</td>
                     <td class="number">${formatPercent(d.share)}</td>
                     <td class="number">${d.orders.toLocaleString()}</td>
                 </tr>
@@ -693,6 +866,34 @@
                 <tr>
                     <td>${p.name}</td>
                     <td class="number">${formatCurrency(p.gmv)}</td>
+                    <td class="number">${formatCurrency(p.margin)}</td>
+                    <td class="number">${formatPercent(p.margin_rate)}</td>
+                    <td class="number">${formatPercent(p.share)}</td>
+                    <td class="number">${p.orders.toLocaleString()}</td>
+                </tr>
+            `).join('');
+
+            // 厂家表格
+            const manufacturerBody = document.getElementById('manufacturerTableBody');
+            manufacturerBody.innerHTML = data.manufacturer.map(m => `
+                <tr>
+                    <td>${m.name}</td>
+                    <td class="number">${formatCurrency(m.gmv)}</td>
+                    <td class="number">${formatCurrency(m.margin)}</td>
+                    <td class="number">${formatPercent(m.margin_rate)}</td>
+                    <td class="number">${formatPercent(m.share)}</td>
+                    <td class="number">${m.orders.toLocaleString()}</td>
+                </tr>
+            `).join('');
+
+            // 产品表格
+            const productBody = document.getElementById('productTableBody');
+            productBody.innerHTML = data.product.map(p => `
+                <tr>
+                    <td>${p.name}</td>
+                    <td class="number">${formatCurrency(p.gmv)}</td>
+                    <td class="number">${formatCurrency(p.margin)}</td>
+                    <td class="number">${formatPercent(p.margin_rate)}</td>
                     <td class="number">${formatPercent(p.share)}</td>
                     <td class="number">${p.orders.toLocaleString()}</td>
                 </tr>

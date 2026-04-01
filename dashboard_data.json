@@ -162,7 +162,8 @@
     {
       "name": "心脑血管",
       "gmv": 1733903.81,
-      "revenue": 1159709.48,
+      "margin": 140008.48,
+      "margin_rate": 8.07,
       "customers": 15951,
       "orders": 10571,
       "share": 18.87
@@ -170,7 +171,8 @@
     {
       "name": "男科疾病",
       "gmv": 1091070.18,
-      "revenue": 838519.97,
+      "margin": 169572.81,
+      "margin_rate": 15.54,
       "customers": 8576,
       "orders": 6783,
       "share": 11.87
@@ -178,7 +180,8 @@
     {
       "name": "神经系统",
       "gmv": 1019383.96,
-      "revenue": 668383.21,
+      "margin": 68146.92,
+      "margin_rate": 6.69,
       "customers": 8281,
       "orders": 5465,
       "share": 11.09
@@ -186,7 +189,8 @@
     {
       "name": "呼吸道疾病",
       "gmv": 629211.29,
-      "revenue": 417926.43,
+      "margin": 55206.96,
+      "margin_rate": 8.77,
       "customers": 11351,
       "orders": 7118,
       "share": 6.85
@@ -194,7 +198,8 @@
     {
       "name": "滋补调养",
       "gmv": 628261.62,
-      "revenue": 397427.27,
+      "margin": 127884.13,
+      "margin_rate": 20.36,
       "customers": 7230,
       "orders": 6088,
       "share": 6.84
@@ -202,7 +207,8 @@
     {
       "name": "肝病科",
       "gmv": 609170.11,
-      "revenue": 405661.61,
+      "margin": 47378.89,
+      "margin_rate": 7.78,
       "customers": 3600,
       "orders": 2713,
       "share": 6.63
@@ -210,7 +216,8 @@
     {
       "name": "皮肤病",
       "gmv": 584398.36,
-      "revenue": 409744.76,
+      "margin": 55718.57,
+      "margin_rate": 9.53,
       "customers": 11884,
       "orders": 7386,
       "share": 6.36
@@ -218,7 +225,8 @@
     {
       "name": "内分泌",
       "gmv": 577399.58,
-      "revenue": 395850.49,
+      "margin": 35590.19,
+      "margin_rate": 6.16,
       "customers": 5825,
       "orders": 4138,
       "share": 6.28
@@ -226,7 +234,8 @@
     {
       "name": "风湿骨科",
       "gmv": 566685.93,
-      "revenue": 329716.14,
+      "margin": 47475.66,
+      "margin_rate": 8.38,
       "customers": 6448,
       "orders": 5008,
       "share": 6.17
@@ -234,7 +243,8 @@
     {
       "name": "消化系统疾病",
       "gmv": 347183.82,
-      "revenue": 182166.16,
+      "margin": 32163.63,
+      "margin_rate": 9.26,
       "customers": 6750,
       "orders": 5904,
       "share": 3.78
@@ -244,7 +254,8 @@
     {
       "name": "广东",
       "gmv": 1019484.08,
-      "revenue": 654398.69,
+      "margin": 100157.35,
+      "margin_rate": 9.82,
       "customers": 13096,
       "orders": 8612,
       "share": 11.09
@@ -252,7 +263,8 @@
     {
       "name": "江苏",
       "gmv": 743829.79,
-      "revenue": 482967.45,
+      "margin": 70959.08,
+      "margin_rate": 9.54,
       "customers": 8806,
       "orders": 6127,
       "share": 8.09
@@ -260,7 +272,8 @@
     {
       "name": "浙江",
       "gmv": 592050.54,
-      "revenue": 387333.57,
+      "margin": 65819.61,
+      "margin_rate": 11.12,
       "customers": 8022,
       "orders": 5597,
       "share": 6.44
@@ -268,7 +281,8 @@
     {
       "name": "上海",
       "gmv": 546712.75,
-      "revenue": 354224.71,
+      "margin": 54361.47,
+      "margin_rate": 9.94,
       "customers": 6787,
       "orders": 5114,
       "share": 5.95
@@ -276,7 +290,8 @@
     {
       "name": "山东",
       "gmv": 514994.08,
-      "revenue": 336804.97,
+      "margin": 47209.06,
+      "margin_rate": 9.17,
       "customers": 6480,
       "orders": 4194,
       "share": 5.6
@@ -284,7 +299,8 @@
     {
       "name": "四川",
       "gmv": 424589.15,
-      "revenue": 237720.46,
+      "margin": 41666.98,
+      "margin_rate": 9.81,
       "customers": 5019,
       "orders": 4033,
       "share": 4.62
@@ -292,7 +308,8 @@
     {
       "name": "河北",
       "gmv": 419203.09,
-      "revenue": 264763.95,
+      "margin": 38950.33,
+      "margin_rate": 9.29,
       "customers": 4758,
       "orders": 3527,
       "share": 4.56
@@ -300,7 +317,8 @@
     {
       "name": "黑龙江",
       "gmv": 387345.52,
-      "revenue": 243648.62,
+      "margin": 28829.71,
+      "margin_rate": 7.44,
       "customers": 4068,
       "orders": 2780,
       "share": 4.22
@@ -308,7 +326,8 @@
     {
       "name": "湖北",
       "gmv": 357491.95,
-      "revenue": 214294.66,
+      "margin": 34576.8,
+      "margin_rate": 9.67,
       "customers": 3972,
       "orders": 3076,
       "share": 3.89
@@ -316,10 +335,375 @@
     {
       "name": "湖南",
       "gmv": 356140.85,
-      "revenue": 205880.22,
+      "margin": 39629.43,
+      "margin_rate": 11.13,
       "customers": 4148,
       "orders": 3469,
       "share": 3.88
+    }
+  ],
+  "manufacturer": [
+    {
+      "name": "晖致制药(大连)有限公司(辉瑞制药有限公司)",
+      "gmv": 394290.68,
+      "margin": 23899.45,
+      "margin_rate": 6.06,
+      "customers": 2335,
+      "orders": 1177,
+      "share": 4.29
+    },
+    {
+      "name": "IPR Pharmaceuticals, INCORPORATED(阿斯利康药业(中国)有限公司分包装)",
+      "gmv": 359420.43,
+      "margin": 38692.99,
+      "margin_rate": 10.77,
+      "customers": 2907,
+      "orders": 419,
+      "share": 3.91
+    },
+    {
+      "name": "正大天晴药业集团股份有限公司",
+      "gmv": 258653.15,
+      "margin": 24562.22,
+      "margin_rate": 9.5,
+      "customers": 1262,
+      "orders": 504,
+      "share": 2.81
+    },
+    {
+      "name": "广州白云山医药集团股份有限公司白云山制药总厂",
+      "gmv": 251989.02,
+      "margin": 30117.9,
+      "margin_rate": 11.95,
+      "customers": 2095,
+      "orders": 1467,
+      "share": 2.74
+    },
+    {
+      "name": "AstraZeneca Pharmaceuticals LP(阿斯利康制药有限公司分包装)",
+      "gmv": 231527.65,
+      "margin": 16725.01,
+      "margin_rate": 7.22,
+      "customers": 1282,
+      "orders": 281,
+      "share": 2.52
+    },
+    {
+      "name": "AstraZeneca Pty Ltd",
+      "gmv": 179217.59,
+      "margin": 20805.88,
+      "margin_rate": 11.61,
+      "customers": 2097,
+      "orders": 265,
+      "share": 1.95
+    },
+    {
+      "name": "Menarini-von Heyden GmbH(MvH)",
+      "gmv": 166539.04,
+      "margin": 3831.92,
+      "margin_rate": 2.3,
+      "customers": 431,
+      "orders": 304,
+      "share": 1.81
+    },
+    {
+      "name": "美时化学制药股份有限公司南投厂(重庆海默尼制药有限公司分包装)",
+      "gmv": 130317.85,
+      "margin": 11359.27,
+      "margin_rate": 8.72,
+      "customers": 1168,
+      "orders": 268,
+      "share": 1.42
+    },
+    {
+      "name": "滇虹药业集团股份有限公司",
+      "gmv": 121969.29,
+      "margin": 8560.14,
+      "margin_rate": 7.02,
+      "customers": 2211,
+      "orders": 387,
+      "share": 1.33
+    },
+    {
+      "name": "Nipro Pharma Corporation Kagamiishi Plant",
+      "gmv": 110319.63,
+      "margin": 8087.83,
+      "margin_rate": 7.33,
+      "customers": 640,
+      "orders": 301,
+      "share": 1.2
+    },
+    {
+      "name": "北京同仁堂科技发展股份有限公司制药厂",
+      "gmv": 108803.47,
+      "margin": 9847.82,
+      "margin_rate": 9.05,
+      "customers": 2079,
+      "orders": 1510,
+      "share": 1.18
+    },
+    {
+      "name": "ASTRAZENECA DUNKERQUE PRODUCTION",
+      "gmv": 96590.24,
+      "margin": 3268.69,
+      "margin_rate": 3.38,
+      "customers": 355,
+      "orders": 149,
+      "share": 1.05
+    },
+    {
+      "name": "海南先声药业有限公司",
+      "gmv": 93012.06,
+      "margin": 6441.42,
+      "margin_rate": 6.93,
+      "customers": 563,
+      "orders": 245,
+      "share": 1.01
+    },
+    {
+      "name": "卫材(中国)药业有限公司",
+      "gmv": 87440.9,
+      "margin": 7780.2,
+      "margin_rate": 8.9,
+      "customers": 1472,
+      "orders": 467,
+      "share": 0.95
+    },
+    {
+      "name": "南京正科医药股份有限公司",
+      "gmv": 71910.45,
+      "margin": 7092.27,
+      "margin_rate": 9.86,
+      "customers": 1279,
+      "orders": 817,
+      "share": 0.78
+    },
+    {
+      "name": "广州朗圣药业有限公司",
+      "gmv": 70930.77,
+      "margin": 51699.2,
+      "margin_rate": 72.89,
+      "customers": 506,
+      "orders": 461,
+      "share": 0.77
+    },
+    {
+      "name": "重庆药友制药有限责任公司",
+      "gmv": 70663.83,
+      "margin": 11627.62,
+      "margin_rate": 16.45,
+      "customers": 1372,
+      "orders": 414,
+      "share": 0.77
+    },
+    {
+      "name": "Novartis Farma S.p.A(北京诺华制药有限公司分包装)",
+      "gmv": 65700.59,
+      "margin": 1145.23,
+      "margin_rate": 1.74,
+      "customers": 229,
+      "orders": 203,
+      "share": 0.71
+    },
+    {
+      "name": "Viatris Pharmaceuticals LLC(晖致制药(大连)有限公司分包装)",
+      "gmv": 65592.02,
+      "margin": 4240.59,
+      "margin_rate": 6.47,
+      "customers": 374,
+      "orders": 242,
+      "share": 0.71
+    },
+    {
+      "name": "北京同仁堂股份有限公司同仁堂制药厂",
+      "gmv": 61700.16,
+      "margin": 3813.1,
+      "margin_rate": 6.18,
+      "customers": 653,
+      "orders": 607,
+      "share": 0.67
+    }
+  ],
+  "product": [
+    {
+      "name": "可定 瑞舒伐他汀钙片 5mg*7片",
+      "gmv": 330840.85,
+      "margin": 39300.77,
+      "margin_rate": 11.88,
+      "customers": 2738,
+      "orders": 288,
+      "share": 3.6
+    },
+    {
+      "name": "润众 恩替卡韦分散片 0.5mg*14片*2板",
+      "gmv": 218630.48,
+      "margin": 21321.82,
+      "margin_rate": 9.75,
+      "customers": 824,
+      "orders": 264,
+      "share": 2.38
+    },
+    {
+      "name": "安达释 达格列净二甲双胍缓释片(Ⅰ) 10mg/1000mg*28片",
+      "gmv": 215734.92,
+      "margin": 16116.92,
+      "margin_rate": 7.47,
+      "customers": 1242,
+      "orders": 244,
+      "share": 2.35
+    },
+    {
+      "name": "普米克令舒 吸入用布地奈德混悬液 2ml:0.5mg*5支",
+      "gmv": 178162.05,
+      "margin": 20748.29,
+      "margin_rate": 11.65,
+      "customers": 2091,
+      "orders": 259,
+      "share": 1.94
+    },
+    {
+      "name": "希爱力/Cialis 他达拉非片 5mg*28片",
+      "gmv": 147558.99,
+      "margin": 1998.81,
+      "margin_rate": 1.35,
+      "customers": 336,
+      "orders": 222,
+      "share": 1.61
+    },
+    {
+      "name": "海默尼/美时玉 盐酸曲唑酮片 50mg*20片",
+      "gmv": 130317.85,
+      "margin": 11359.27,
+      "margin_rate": 8.72,
+      "customers": 1168,
+      "orders": 268,
+      "share": 1.42
+    },
+    {
+      "name": "白云山/金戈 枸橼酸西地那非片 50mg*20片",
+      "gmv": 121893.11,
+      "margin": 7006.57,
+      "margin_rate": 5.75,
+      "customers": 444,
+      "orders": 245,
+      "share": 1.33
+    },
+    {
+      "name": "倍择瑞/令畅 布地格福吸入气雾剂 120揿",
+      "gmv": 96590.24,
+      "margin": 3268.69,
+      "margin_rate": 3.38,
+      "customers": 355,
+      "orders": 149,
+      "share": 1.05
+    },
+    {
+      "name": "立普妥 阿托伐他汀钙片 20mg*28片",
+      "gmv": 94046.71,
+      "margin": 6778.36,
+      "margin_rate": 7.21,
+      "customers": 429,
+      "orders": 215,
+      "share": 1.02
+    },
+    {
+      "name": "康王 复方酮康唑发用洗剂 100ml/管",
+      "gmv": 91668.78,
+      "margin": 6446.57,
+      "margin_rate": 7.03,
+      "customers": 1466,
+      "orders": 174,
+      "share": 1.0
+    },
+    {
+      "name": "喜格迈 尼可地尔片 5mg*10片*10板",
+      "gmv": 64417.62,
+      "margin": 4568.03,
+      "margin_rate": 7.09,
+      "customers": 262,
+      "orders": 135,
+      "share": 0.7
+    },
+    {
+      "name": "瑞复舒 吗替麦考酚酯胶囊 0.25g*10粒*4板",
+      "gmv": 61820.99,
+      "margin": 6754.62,
+      "margin_rate": 10.93,
+      "customers": 477,
+      "orders": 163,
+      "share": 0.67
+    },
+    {
+      "name": "左洛复 盐酸舍曲林片 50mg*14片",
+      "gmv": 59813.11,
+      "margin": 3764.3,
+      "margin_rate": 6.29,
+      "customers": 188,
+      "orders": 128,
+      "share": 0.65
+    },
+    {
+      "name": "妙纳 盐酸乙哌立松片 50mg*10片*2板(薄膜衣片)",
+      "gmv": 59616.98,
+      "margin": 6456.69,
+      "margin_rate": 10.83,
+      "customers": 1234,
+      "orders": 255,
+      "share": 0.65
+    },
+    {
+      "name": "立普妥 阿托伐他汀钙片 10mg*28片",
+      "gmv": 57797.89,
+      "margin": 3972.25,
+      "margin_rate": 6.87,
+      "customers": 336,
+      "orders": 98,
+      "share": 0.63
+    },
+    {
+      "name": "力平之 非诺贝特胶囊 200mg*10粒",
+      "gmv": 57193.06,
+      "margin": 3315.59,
+      "margin_rate": 5.8,
+      "customers": 653,
+      "orders": 230,
+      "share": 0.62
+    },
+    {
+      "name": "灵泰/西维尔 硒酵母片(OTC) 50μg*50片/瓶",
+      "gmv": 53371.18,
+      "margin": 3236.65,
+      "margin_rate": 6.06,
+      "customers": 1121,
+      "orders": 256,
+      "share": 0.58
+    },
+    {
+      "name": "西乐葆/CELEBREX 塞来昔布胶囊 0.2g*18粒",
+      "gmv": 52095.4,
+      "margin": 3374.15,
+      "margin_rate": 6.48,
+      "customers": 254,
+      "orders": 143,
+      "share": 0.57
+    },
+    {
+      "name": "喜格迈 尼可地尔片 5mg*10片*3板",
+      "gmv": 45902.01,
+      "margin": 3519.8,
+      "margin_rate": 7.67,
+      "customers": 378,
+      "orders": 166,
+      "share": 0.5
+    },
+    {
+      "name": "曲莱 奥卡西平片 0.3g*50片",
+      "gmv": 40820.57,
+      "margin": 870.56,
+      "margin_rate": 2.13,
+      "customers": 84,
+      "orders": 81,
+      "share": 0.44
     }
   ]
 }
