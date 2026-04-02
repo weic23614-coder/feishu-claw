@@ -1,0 +1,197 @@
+{
+  "meta": {
+    "date": "2026-03-31",
+    "generated_at": "2026-04-01 10:41:12",
+    "data_range": "2026-03-23 ~ 2026-03-31"
+  },
+  "summary": {
+    "gmv": 1066795.44,
+    "revenue": 680714.36,
+    "margin": 103882.63,
+    "margin_rate": 9.74,
+    "customers": 12436,
+    "new_customers": 3540,
+    "new_customer_rate": 28.47,
+    "orders": 9355
+  },
+  "changes": {
+    "gmv_vs_yesterday": -3.11,
+    "gmv_vs_avg": 5.07,
+    "margin_rate_vs_yesterday": -0.18,
+    "new_customer_rate_vs_yesterday": 1.93
+  },
+  "insights": {
+    "gmv_trend": "下降",
+    "margin_trend": "下降",
+    "new_customer_trend": "上升"
+  },
+  "platforms": [
+    {
+      "name": "官网/APP",
+      "gmv": 558476.28,
+      "margin_rate": 6.51,
+      "share": 52.35
+    },
+    {
+      "name": "三方平台",
+      "gmv": 371568.48,
+      "margin_rate": 9.57,
+      "share": 34.83
+    },
+    {
+      "name": "官网/H5",
+      "gmv": 106507.08,
+      "margin_rate": 20.75,
+      "share": 9.98
+    },
+    {
+      "name": "官网/PC",
+      "gmv": 30243.6,
+      "margin_rate": 32.6,
+      "share": 2.83
+    }
+  ],
+  "top_depts": [
+    {
+      "name": "心脑血管",
+      "gmv": 189621.72,
+      "margin_rate": 8.3,
+      "share": 17.77
+    },
+    {
+      "name": "神经系统",
+      "gmv": 133939.13,
+      "margin_rate": 6.67,
+      "share": 12.56
+    },
+    {
+      "name": "男科疾病",
+      "gmv": 128760.07,
+      "margin_rate": 16.34,
+      "share": 12.07
+    },
+    {
+      "name": "内分泌",
+      "gmv": 79637.27,
+      "margin_rate": 5.96,
+      "share": 7.47
+    },
+    {
+      "name": "滋补调养",
+      "gmv": 73104.89,
+      "margin_rate": 21.79,
+      "share": 6.85
+    }
+  ],
+  "top_provinces": [
+    {
+      "name": "广东",
+      "gmv": 126057.46,
+      "share": 11.82
+    },
+    {
+      "name": "江苏",
+      "gmv": 86605.63,
+      "share": 8.12
+    },
+    {
+      "name": "浙江",
+      "gmv": 63801.69,
+      "share": 5.98
+    },
+    {
+      "name": "上海",
+      "gmv": 63712.66,
+      "share": 5.97
+    },
+    {
+      "name": "山东",
+      "gmv": 55893.25,
+      "share": 5.24
+    }
+  ],
+  "top_manufacturers": [
+    {
+      "name": "IPR Pharmaceuticals, INCORPORATED(阿斯利康药业(中国)有限公司分包装)",
+      "gmv": 45739.56,
+      "margin_rate": 11.42
+    },
+    {
+      "name": "AstraZeneca Pharmaceuticals LP(阿斯利康制药有限公司分包装)",
+      "gmv": 40231.58,
+      "margin_rate": 7.04
+    },
+    {
+      "name": "广州白云山医药集团股份有限公司白云山制药总厂",
+      "gmv": 30094.56,
+      "margin_rate": 11.44
+    },
+    {
+      "name": "Menarini-von Heyden GmbH(MvH)",
+      "gmv": 24717.0,
+      "margin_rate": 1.99
+    },
+    {
+      "name": "晖致制药(大连)有限公司(辉瑞制药有限公司)",
+      "gmv": 24441.19,
+      "margin_rate": 6.03
+    }
+  ],
+  "top_products": [
+    {
+      "name": "可定 瑞舒伐他汀钙片 5mg*7片",
+      "gmv": 41617.9,
+      "margin_rate": 12.7
+    },
+    {
+      "name": "安达释 达格列净二甲双胍缓释片(Ⅰ) 10mg/1000mg*28片",
+      "gmv": 38729.78,
+      "margin_rate": 7.11
+    },
+    {
+      "name": "希爱力/Cialis 他达拉非片 5mg*28片",
+      "gmv": 22884.4,
+      "margin_rate": 2.05
+    },
+    {
+      "name": "润众 恩替卡韦分散片 0.5mg*14片*2板",
+      "gmv": 18294.55,
+      "margin_rate": 9.73
+    },
+    {
+      "name": "普米克令舒 吸入用布地奈德混悬液 2ml:0.5mg*5支",
+      "gmv": 16911.89,
+      "margin_rate": 12.32
+    }
+  ],
+  "analysis": {
+    "key_findings": [
+      "3月31日GMV为¥1,066,795，较昨日下降3.11%，但高于周期平均5.07%",
+      "毛利率9.74%，较昨日下降0.18个百分点",
+      "新客率28.47%，较昨日上升1.93个百分点"
+    ],
+    "highlights": [
+      "官网/H5渠道毛利率高达20.75%，但GMV占比仅9.98%",
+      "滋补调养科室毛利率21.79%，是最高毛利品类",
+      "广东作为Top1省份，贡献了11.82%的GMV"
+    ],
+    "risks": [
+      "官网/APP主渠道毛利率仅6.51%，低于整体水平，需关注定价策略",
+      "GMV环比下降3.11%，需监控周末效应（31日为周五）",
+      "部分厂家（如Menarini）毛利率仅1.99%，拉低整体毛利"
+    ],
+    "recommendations": [
+      "提升官网/H5渠道流量，发挥高毛利优势",
+      "对低毛利产品（如希爱力）进行促销策略优化或捆绑销售",
+      "加强广东、江苏、浙江等Top3省份的营销投入",
+      "关注心脑血管、男科等高GMV品类的竞品动态",
+      "新客率上升是积极信号，建议跟进新客转化路径"
+    ],
+    "focus_next_day": [
+      "监控GMV是否延续下降趋势",
+      "跟踪官网/H5渠道GMV占比提升情况",
+      "关注低毛利产品促销效果",
+      "检查新客留存率（当前仅看新客数）"
+    ]
+  }
+}
